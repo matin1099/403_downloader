@@ -1,0 +1,54 @@
+ def findDownloadPath(self, file_name, download_path, subfolder):
+
+        file_name_split = file_name.split('.')
+        file_extension = file_name_split[-1]
+
+        # convert extension letters to lower case
+        # for example "JPG" will be converted in "jpg"
+        file_extension = file_extension.lower()
+
+        # remove query from file_extension if existed
+        # if '?' in file_extension, then file_name contains query components.
+        if '?' in file_extension:
+            file_extension = file_extension.split('?')[0]
+
+        # audio formats
+        audio = ['act', 'aiff', 'aac', 'amr', 'ape', 'au', 'awb', 'dct', 'dss', 'dvf', 'flac', 'gsm', 'iklax', 'ivs', 'm4a',
+                 'm4p', 'mmf', 'mp3', 'mpc', 'msv', 'ogg', 'oga', 'opus', 'ra', 'raw', 'sln', 'tta', 'vox', 'wav', 'wma', 'wv']
+
+        # video formats
+        video = ['3g2', '3gp', 'asf', 'avi', 'drc', 'flv', 'm4v', 'mkv', 'mng', 'mov', 'qt', 'mp4', 'm4p', 'mpg', 'mp2',
+                 'mpeg', 'mpe', 'mpv', 'm2v', 'mxf', 'nsv', 'ogv', 'rmvb', 'roq', 'svi', 'vob', 'webm', 'wmv', 'yuv', 'rm']
+
+        # document formats
+        document = ['doc', 'docx', 'html', 'htm', 'fb2', 'odt', 'sxw', 'pdf', 'ps', 'rtf', 'tex', 'txt', 'epub', 'pub'
+                    'mobi', 'azw', 'azw3', 'azw4', 'kf8', 'chm', 'cbt', 'cbr', 'cbz', 'cb7', 'cba', 'ibooks', 'djvu', 'md']
+
+        # compressed formats
+        compressed = ['a', 'ar', 'cpio', 'shar', 'LBR', 'iso', 'lbr', 'mar', 'tar', 'bz2', 'F', 'gz', 'lz', 'lzma', 'lzo',
+                      'rz', 'sfark', 'sz', 'xz', 'Z', 'z', 'infl', '7z', 's7z', 'ace', 'afa', 'alz', 'apk', 'arc', 'arj', 'b1',
+                      'ba', 'bh', 'cab', 'cfs', 'cpt', 'dar', 'dd', 'dgc', 'dmg', 'ear', 'gca', 'ha', 'hki', 'ice', 'jar', 'kgb',
+                      'lzh', 'lha', 'lzx', 'pac', 'partimg', 'paq6', 'paq7', 'paq8', 'pea', 'pim', 'pit', 'qda', 'rar', 'rk', 'sda',
+                      'sea', 'sen', 'sfx', 'sit', 'sitx', 'sqx', 'tar.gz', 'tgz', 'tar.Z', 'tar.bz2', 'tbz2', 'tar.lzma', 'tlz', 'uc',
+                      'uc0', 'uc2', 'ucn', 'ur2', 'ue2', 'uca', 'uha', 'war', 'wim', 'xar', 'xp3', 'yz1', 'zip', 'zipx', 'zoo', 'zpaq',
+                      'zz', 'ecc', 'par', 'par2']
+
+        # return download_path
+        if str(subfolder) == 'yes':
+            if file_extension in audio:
+                return os.path.join(download_path, 'Audios')
+
+            # aria2c downloads youtube links file_name with 'videoplayback' name?!
+            elif (file_extension in video) or (file_name == 'videoplayback'):
+                return os.path.join(download_path, 'Videos')
+
+            elif file_extension in document:
+                return os.path.join(download_path, 'Documents')
+
+            elif file_extension in compressed:
+                return os.path.join(download_path, 'Compressed')
+
+            else:
+                return os.path.join(download_path, 'Others')
+        else:
+            return download_path
